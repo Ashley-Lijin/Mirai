@@ -1,22 +1,44 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import { Separator } from "@/components/ui/separator"
+import { FcGoogle } from "react-icons/fc"
+import { FaGithub } from "react-icons/fa"
+import { SignInFlow } from "../types"
+import { useState } from "react"
 
-const SignInCard = () => {
+
+interface SignInCardProps {
+  setState: (state: SignInFlow) => void
+}
+
+const SignInCard = ({setState}: SignInCardProps) => {
+
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+
   return (
-  <Card className="w-full h-full p-7 flex flex-col justify-center items-center md:flex-row gap-[30px] md:gap-[100px]">
+  <Card className="w-full h-full p-7 flex flex-col justify-center items-center lg:flex-row gap-[30px] lg:gap-[100px]">
     <CardHeader>
         <CardTitle>Mirai</CardTitle>
         <CardDescription>Welcome Back! Login to Continue</CardDescription>
     </CardHeader>
     <CardContent className="space-y-5 px-0 pb-0">
         <form className="space-y-2.5">
-            <Input className="w-[300px]" disabled={false} placeholder="Email" type="email" required={true} value="" onChange={() => {}}/>
+            <Input className="w-[300px] lg:w-full" disabled={false} placeholder="Email" type="email" required={true} value={email} onChange={(e) => setEmail(e.target.value)}/>
         </form>
         <form className="space-y-2.5">
-            <Input disabled={false} placeholder="Password" type="password" required={true} value="" onChange={() => {}}/>
+            <Input disabled={false} placeholder="Password" type="password" className="w-full" required={true} value={password} onChange={(e) => setPassword(e.target.value)}/>
         </form>
-        <Button type="submit" className="w-full" size="default">Login</Button>
+        <Button type="submit" className="w-full" size="default">Sign In</Button>
+        <Separator/>
+        <div className="flex flex-col lg:flex-row gap-[20px]">
+          <Button className="w-full space-x-2" disabled={false} onChange={() => {}} variant="outline"><FcGoogle/> <p>Continue With Google</p></Button>
+          <Button className="w-full space-x-2" disabled={false} onChange={() => {}} variant="outline"><FaGithub/> <p>Continue With GitHub</p></Button>
+        </div>
+        <p className="text-muted-foreground">
+          don&apos;t have an account <span onClick={() => setState("signUp")} className="hover:text-sky-600 hover:underline cursor-pointer">Sign up</span>?
+        </p>
     </CardContent>
   </Card>
   )
